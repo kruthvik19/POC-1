@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+}
+
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.todo-item {
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  background: #1976d2;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #a0a0a0;
+  cursor: not-allowed;
+}

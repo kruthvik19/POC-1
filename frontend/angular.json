@@ -1,0 +1,37 @@
+{
+  "$schema": "https://angular.io/schema/angular-json",
+  "version": 1,
+  "projects": {
+    "poc-frontend": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/frontend",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": ["src/assets"],
+            "styles": ["src/styles.css"],
+            "scripts": []
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "poc-frontend:build"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "poc-frontend",
+  "cli": {
+    "analytics": "91b20432-ebc4-4a4f-8670-6486e789c516"
+  }
+}

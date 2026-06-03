@@ -1,0 +1,17 @@
+<div class="app-container">
+  <h1>Angular + Node + MongoDB</h1>
+
+  <button (click)="fetchTodos()" [disabled]="loading">Refresh todos</button>
+
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" style="color: red; margin-top: 12px;">{{ error }}</div>
+
+  <div *ngIf="!loading && todos.length === 0" style="margin-top: 16px;">
+    No todos returned yet. Start the backend and refresh.
+  </div>
+
+  <div *ngFor="let todo of todos" class="todo-item">
+    <strong>{{ todo.title }}</strong>
+    <div>Status: {{ todo.completed ? 'Done' : 'Open' }}</div>
+  </div>
+</div>
