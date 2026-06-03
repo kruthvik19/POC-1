@@ -1,12 +1,32 @@
-.app-container {
-  margin: 24px auto;
-  max-width: 760px;
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: #1976d2;
+  color: white;
 }
 
-h1 {
-  margin-bottom: 18px;
+.app-header h1 {
+  margin: 0;
+  font-size: 20px;
 }
 
-div.todo-item {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+.app-header nav {
+  display: flex;
+  gap: 18px;
+}
+
+.app-header a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.app-header a.active {
+  text-decoration: underline;
+}
+
+.app-main {
+  padding: 24px;
 }

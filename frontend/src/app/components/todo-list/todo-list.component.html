@@ -1,0 +1,31 @@
+<div *ngIf="todos.length === 0" class="empty-state">
+  No tasks yet. Add a task to get started.
+</div>
+
+<div *ngFor="let todo of todos" class="todo-item">
+  <div class="todo-row">
+    <div>
+      <label class="toggle-label">
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          (change)="toggle.emit(todo)"
+        />
+        <span [class.completed]="todo.completed">{{ todo.title }}</span>
+      </label>
+    </div>
+    <div class="actions">
+      <button *ngIf="editingId !== todo._id" (click)="edit.emit(todo)">Edit</button>
+      <button *ngIf="editingId === todo._id" (click)="save.emit(todo)">Save</button>
+      <button *ngIf="editingId === todo._id" (click)="cancel.emit()">Cancel</button>
+      <button class="danger" (click)="delete.emit(todo)">Delete</button>
+    </div>
+  </div>
+  <div *ngIf="editingId === todo._id" class="edit-row">
+    <input
+      type="text"
+      [(ngModel)]="editingTitle"
+      (ngModelChange)="editingTitleChange.emit($event)"
+    />
+  </div>
+</div>

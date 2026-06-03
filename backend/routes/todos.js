@@ -1,22 +1,28 @@
-const express = require('express');
+
 const Todo = require('../models/todo');
+
+const express = require('express');
+const controller = require('../controllers/todoController');
+const asyncWrap = require('../middleware/asyncWrapper');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', asyncWrap(controller.getTodos));
+router.post('/', asyncWrap(controller.createTodo));
+router.put('/:id', asyncWrap(controller.updateTodo));
+router.delete('/:id', asyncWrap(controller.deleteTodo));
+
+module.exports = router;
+
+router.delete('/:id', async (req, res) => {
   try {
-    const todos = await Todo.find().limit(10);
-    if (todos.length === 0) {
-      await Todo.create([
-        { title: 'Build Angular frontend', completed: true },
-        { title: 'Create Node.js API', completed: true },
-        { title: 'Connect to MongoDB', completed: false }
-      ]);
-      return res.json(await Todo.find().limit(10));
+    const todo = await Todo.findByIdAndDelete(req.params.id);
+    if (!todo) {
+      return res.status(404).json({ error: 'Todo not found' });
     }
-    res.json(todos);
+    res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: 'Unable to load todos' });
+    res.status(500).json({ error: 'Unable to delete todo' });
   }
 });
 

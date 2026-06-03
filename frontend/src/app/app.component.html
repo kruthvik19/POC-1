@@ -1,17 +1,11 @@
-<div class="app-container">
-  <h1>Angular + Node + MongoDB</h1>
+<header class="app-header">
+  <h1>Todo App</h1>
+  <nav>
+    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/todos" routerLinkActive="active">Todos</a>
+  </nav>
+</header>
 
-  <button (click)="fetchTodos()" [disabled]="loading">Refresh todos</button>
-
-  <div *ngIf="loading">Loading...</div>
-  <div *ngIf="error" style="color: red; margin-top: 12px;">{{ error }}</div>
-
-  <div *ngIf="!loading && todos.length === 0" style="margin-top: 16px;">
-    No todos returned yet. Start the backend and refresh.
-  </div>
-
-  <div *ngFor="let todo of todos" class="todo-item">
-    <strong>{{ todo.title }}</strong>
-    <div>Status: {{ todo.completed ? 'Done' : 'Open' }}</div>
-  </div>
-</div>
+<main class="app-main">
+  <router-outlet></router-outlet>
+</main>
