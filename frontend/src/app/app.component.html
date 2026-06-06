@@ -1,17 +1,37 @@
-<div class="app-container">
-  <h1>Angular + Node + MongoDB</h1>
+<app-header [isAdmin]="isAdmin" (loginRequested)="onLoginClick()"></app-header>
 
-  <button (click)="fetchTodos()" [disabled]="loading">Refresh todos</button>
+<app-login-dialog 
+  [visible]="showLoginDialog" 
+  (visibleChange)="showLoginDialog = $event"
+  (loginSubmitted)="onLoginSubmit($event)">
+</app-login-dialog>
 
-  <div *ngIf="loading">Loading...</div>
-  <div *ngIf="error" style="color: red; margin-top: 12px;">{{ error }}</div>
+<app-home-page 
+  [policies]="policies" 
+  [isAdmin]="isAdmin"
+  (editPolicy)="onEditPolicy($event)"
+  (deletePolicy)="onDeletePolicy($event)">
+</app-home-page>
 
-  <div *ngIf="!loading && todos.length === 0" style="margin-top: 16px;">
-    No todos returned yet. Start the backend and refresh.
-  </div>
+<app-policy-form-dialog 
+  [visible]="showEditDialog"
+  [isEdit]="true"
+  [model]="editModel"
+  (visibleChange)="showEditDialog = $event"
+  (submitted)="onEditSubmit($event)">
+</app-policy-form-dialog>
 
-  <div *ngFor="let todo of todos" class="todo-item">
-    <strong>{{ todo.title }}</strong>
-    <div>Status: {{ todo.completed ? 'Done' : 'Open' }}</div>
-  </div>
-</div>
+<app-policy-form-dialog 
+  [visible]="showAddDialog"
+  [isEdit]="false"
+  [model]="addModel"
+  (visibleChange)="showAddDialog = $event"
+  (submitted)="onAddSubmit($event)">
+</app-policy-form-dialog>
+
+<app-admin-sidebar 
+  *ngIf="isAdmin"
+  (policiesClick)="loadPolicies()"
+  (addPolicyClick)="onAddPolicyClick()"
+  (logoutClick)="onLogout()">
+</app-admin-sidebar>

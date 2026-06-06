@@ -1,43 +1,125 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { PolicyService } from './services/policy.service';
+import { AuthService } from './services/auth.service';
+import { Policy } from './models/policy.model';
 
-interface Todo {
-  _id?: string;
-  title: string;
-  completed: boolean;
-}
+import { HeaderComponent } from './components/header/header.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
+import { PolicyFormDialogComponent } from './components/policy-form-dialog/policy-form-dialog.component';
+import { HomePageComponent } from './pages/home/home.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    HeaderComponent,
+    LoginDialogComponent,
+    AdminSidebarComponent,
+    PolicyFormDialogComponent,
+    HomePageComponent
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  todos: Todo[] = [];
-  loading = false;
-  error = '';
+  private policyService = inject(PolicyService);
+  private authService = inject(AuthService);
 
-  constructor(private http: HttpClient) {}
+  policies: Policy[] = [];
+  loading = false;
+  isAdmin = false;
+  token = '';
+
+  showLoginDialog = false;
+  showEditDialog = false;
+  showAddDialog = false;
+  editModel: any = null;
+  addModel: any = { name: '', premium: '', coverage: '', duration: '', eligibility: '', benefits: '' };
 
   ngOnInit(): void {
-    this.fetchTodos();
+    this.loadPolicies();
+    const t = this.authService.getToken();
+    if (t) {
+      this.token = t;
+      this.isAdmin = true;
+    }
   }
 
-  fetchTodos(): void {
+  async loadPolicies() {
     this.loading = true;
-    this.error = '';
-    this.http.get<Todo[]>('http://localhost:4000/api/todos').subscribe({
-      next: data => {
-        this.todos = data;
-        this.loading = false;
-      },
-      error: err => {
-        this.error = 'Could not load todos. Is the backend running?';
-        this.loading = false;
-      }
-    });
+    try {
+      this.policies = await this.policyService.getPolicies();
+    } catch (e) {
+      console.error(e);
+    }
+    this.loading = false;
+  }
+
+  onLoginClick() {
+    this.showLoginDialog = true;
+  }
+
+  async onLoginSubmit(credentials: { username: string; password: string }) {
+    try {
+      const res = await this.authService.login(credentials.username, credentials.password);
+      this.authService.setToken(res.token);
+      this.token = res.token;
+      this.isAdmin = true;
+      this.showLoginDialog = false;
+    } catch (e) {
+      alert('Login failed');
+    }
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.token = '';
+    this.isAdmin = false;
+  }
+
+  onEditPolicy(policy: Policy) {
+    this.editModel = { ...policy, benefitsText: (policy.benefits || []).join(', ') };
+    this.showEditDialog = true;
+  }
+
+  async onEditSubmit(model: any) {
+    try {
+      await this.policyService.updatePolicy(model.id || model._id, model, this.token);
+      this.showEditDialog = false;
+      this.loadPolicies();
+    } catch (e) {
+      alert('Update failed');
+    }
+  }
+
+  async onDeletePolicy(policy: Policy) {
+    if (!confirm('Delete policy?')) return;
+    try {
+      await this.policyService.deletePolicy(policy.id || policy._id || '', this.token);
+      this.loadPolicies();
+    } catch (e) {
+      alert('Delete failed');
+    }
+  }
+
+  onAddPolicyClick() {
+    this.addModel = { name: '', premium: '', coverage: '', duration: '', eligibility: '', benefits: '' };
+    this.showAddDialog = true;
+  }
+
+  async onAddSubmit(model: any) {
+    try {
+      await this.policyService.createPolicy(model, this.token);
+      this.showAddDialog = false;
+      this.addModel = { name: '', premium: '', coverage: '', duration: '', eligibility: '', benefits: '' };
+      this.loadPolicies();
+    } catch (e) {
+      alert('Add failed');
+    }
   }
 }

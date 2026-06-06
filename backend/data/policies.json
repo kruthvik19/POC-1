@@ -1,0 +1,40 @@
+[
+  {
+    "name": "",
+    "premium": "",
+    "coverage": "",
+    "duration": "",
+    "eligibility": "",
+    "benefits": [
+      ""
+    ],
+    "id": "1780553358210"
+  },
+  {
+    "id": "p1",
+    "name": "Health Shield",
+    "premium": "6000",
+    "coverage": "500000",
+    "duration": "2",
+    "eligibility": "18-60 years",
+    "benefits": [
+      "Cashless Treatment",
+      "Surgery Cover",
+      "Diagnostics Cover",
+      "Room rent cover"
+    ]
+  },
+  {
+    "id": "p2",
+    "name": "Vehicle Protection",
+    "premium": "9000",
+    "coverage": "300000",
+    "duration": "6",
+    "eligibility": "Valid RC+ Driving License",
+    "benefits": [
+      "Accident Cover",
+      "Third party",
+      "Damage protection"
+    ]
+  }
+]

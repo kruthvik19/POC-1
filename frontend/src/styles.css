@@ -1,33 +1,277 @@
-body {
+@import "~primeicons/primeicons.css";
+@import "~primeflex/primeflex.css";
+@import "~primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/primeng.min.css";
+
+body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; background:#f2f4f7; margin:0 }
+
+.app-container { max-width: 1000px; margin: 0 auto; padding: 24px }
+
+.todo-item { padding: 12px; margin-bottom: 10px; background: #ffffff; border-radius: 8px; border: 1px solid #e0e0e0 }
+
+button { padding: 8px 14px; border: none; border-radius: 4px; cursor: pointer }
+
+button:disabled { background: #a0a0a0; cursor: not-allowed }
+
+.admin-login { background: transparent; color: #000; border: none; padding: 0; font-size: 14px; cursor: pointer; font-weight: 500 }
+
+.admin-login:hover { background: #c6cfec; }
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.policy-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.policy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.policy-header {
+  padding: 1rem;
+  background: #dee2e6;
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
+  justify-content: center;
+  justify-self: anchor-center;
+}
+
+.policy-header h3 {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
+  font-weight: 800;
+    color: #000000;
+    font-size: 20px;
 }
 
-.app-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 24px;
+.policy-body {
+  padding: 1rem;
 }
 
-.todo-item {
-  padding: 12px;
-  margin-bottom: 10px;
-  background: #ffffff;
+.policy-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0.6rem 0;
+}
+
+.policy-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+     font-weight: 1000;
+    color: #000000;
+    font-size: 16px;
+}
+
+.value {
+  text-align: right;
+  color: #0f172a;
+}
+
+.benefits-section {
+  margin-top: 1rem;
+}
+
+.benefits-section h4 {
+  margin-bottom: 0.5rem;
+      color: #000000;
+    font-size: 20px;
+}
+
+.benefits-section ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.benefits-section li {
+  margin-bottom: 0.35rem;
+  color: black;
+}
+
+.policy-actions {
+  display: flex;
+  gap: 10px;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+.policy-actions button {
+  flex: 1;
+  background-color: transparent;
+  color:blue;
+  border: 1px solid #bfc5cf;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .policy-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .value {
+    text-align: left;
+  }
+
+  .policy-actions {
+    flex-direction: column;
+  }
+
+  .policy-actions button {
+    width: 100%;
+  }
+}
+
+.policy-card {
+  width: 100%;
+  height: 100%;
+}
+
+.p-card {
+    background: #dee2e6 !important;
+    color: #495057;
+    box-shadow: 0 2px 1px -1px #0003, 0 1px 1px #00000024, 0 1px 3px #0000001f;
+    border-radius: 40px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  padding-top: 0.5rem;
+}
+
+.login-btn {
+  width: 100%;
+  height: 3rem;
+}
+
+:host ::ng-deep .login-dialog .p-dialog {
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .login-dialog .p-dialog-header {
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+:host ::ng-deep .login-dialog .p-dialog-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+:host ::ng-deep .login-dialog .p-dialog-content {
+  padding: 1.5rem 2rem 2rem;
+}
+
+:host ::ng-deep .p-floatlabel {
+  width: 100%;
+}
+
+:host ::ng-deep .p-inputtext {
+  width: 100%;
+  height: 3.8rem;
+  font-size: 1.1rem;
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
 }
 
-button {
-  padding: 8px 14px;
-  border: none;
-  border-radius: 4px;
-  background: #1976d2;
+:host ::ng-deep .p-password,
+:host ::ng-deep .p-password-input {
+  width: 100%;
+}
+
+:host ::ng-deep .p-password-input {
+  height: 3.8rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+}
+
+:host ::ng-deep .login-btn.p-button {
+  border-radius: 999px;
+  height: 3.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-button-label {
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-dialog-mask {
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 576px) {
+  :host ::ng-deep .login-dialog .p-dialog {
+    width: 95vw !important;
+  }
+}
+
+.login-btn{
+  background: rgb(214, 213, 213);
+  color: blue;
+  font-weight: 600;
+  border-radius: 30px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: #c2c2c2;
   color: white;
-  cursor: pointer;
+
+  padding: 19px 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-button:disabled {
-  background: #a0a0a0;
-  cursor: not-allowed;
+.policy-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.action-btn {
+  flex: 1;
+}
+
+:host ::ng-deep .action-btn.p-button {
+  background: transparent;
+  border: 1px solid #bfc5cf;
+  color: #ebebeb;
+
+  border-radius: 999px;
+
+  height: 44px;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .action-btn.p-button:hover {
+  background: #f8fafc;
+  border-color: #2563eb;
+}
+
+:host ::ng-deep .action-btn .p-button-label {
+  font-weight: 600;
 }
