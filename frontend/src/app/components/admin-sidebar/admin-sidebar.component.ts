@@ -11,7 +11,6 @@ import { ButtonModule } from 'primeng/button';
       <div class="sidebar">
         <h2>Admin Dashboard</h2>
         <button pButton type="button" label="Policies" class="p-button-secondary full-width" (click)="onPoliciesClick()"></button>
-        <button pButton type="button" label="+ Add New Policy" (click)="onAddPolicyClick()" class="p-button-success full-width"></button>
         <button pButton type="button" label="Logout" class="p-button-danger full-width" (click)="onLogoutClick()"></button>
       </div>
     </div>
@@ -24,17 +23,13 @@ import { ButtonModule } from 'primeng/button';
   `]
 })
 export class AdminSidebarComponent {
-  @Output() policiesClick = new EventEmitter<void>();
-  @Output() addPolicyClick = new EventEmitter<void>();
+  @Output() policiesClick = new EventEmitter<void>(); 
   @Output() logoutClick = new EventEmitter<void>();
 
   onPoliciesClick() {
     this.policiesClick.emit();
   }
 
-  onAddPolicyClick() {
-    this.addPolicyClick.emit();
-  }
 
   onLogoutClick() {
     this.logoutClick.emit();

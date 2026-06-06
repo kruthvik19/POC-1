@@ -10,7 +10,8 @@
   [policies]="policies" 
   [isAdmin]="isAdmin"
   (editPolicy)="onEditPolicy($event)"
-  (deletePolicy)="onDeletePolicy($event)">
+  (deletePolicy)="onDeletePolicy($event)"
+  (addPolicyClick)="onAddPolicyClick()">
 </app-home-page>
 
 <app-policy-form-dialog 
@@ -32,6 +33,5 @@
 <app-admin-sidebar 
   *ngIf="isAdmin"
   (policiesClick)="loadPolicies()"
-  (addPolicyClick)="onAddPolicyClick()"
   (logoutClick)="onLogout()">
 </app-admin-sidebar>

@@ -10,9 +10,14 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [CommonModule, CardModule, PolicyCardComponent,ButtonModule],
   template: `
-    <div class="hero">
+    <div class="hero" *ngIf="!isAdmin">
       <h1>Welcome to Insure+ Insurance Portal</h1>
       <p>Explore Our Latest Policies</p>
+    </div>
+
+    <div class="hero" *ngIf="isAdmin">
+      <h1>Our Policies</h1>
+      <p></p>
     </div>
 
     <div class="cards">
@@ -23,16 +28,11 @@ import { ButtonModule } from 'primeng/button';
         (editClick)="onEditPolicy($event)"
         (deleteClick)="onDeletePolicy($event)">
       </app-policy-card>
+        <div class="add-policy-container" *ngIf="isAdmin">
+        <button pButton type="button" label="+ Add New Policy" (click)="onAddPolicyClick()" class="p-button-success full-width"></button>
+      </div>
     </div>
-    <div class="add-policy-container" *ngIf="isAdmin">
-  <button
-    pButton
-    type="button"
-    label="+ Add New Policy"
-    class="add-policy-btn"
-    (click)="onAddPolicyClick()">
-  </button>
-</div>
+  
   `,
  styles: [`
   .hero {
@@ -86,12 +86,11 @@ export class HomePageComponent implements OnInit {
   @Input() isAdmin = false;
   @Output() editPolicy = new EventEmitter<Policy>();
   @Output() deletePolicy = new EventEmitter<Policy>();
-  @Output() addPolicy = new EventEmitter<void>();
+  @Output() addPolicyClick = new EventEmitter<void>();
 
-onAddPolicyClick() {
-  this.addPolicy.emit();
-}
-
+  onAddPolicyClick() {
+    this.addPolicyClick.emit();
+  }
   ngOnInit() {}
 
   onEditPolicy(policy: Policy) {
