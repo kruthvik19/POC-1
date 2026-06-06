@@ -1,4 +1,5 @@
 const express = require('express');
+require('express-async-errors');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
@@ -14,8 +15,13 @@ const app = express();
 const port = process.env.PORT || 4000;
 const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://localhost:27017/poc1';
 
-app.use(cors());
+app.use(helmet());
+app.use(morgan('combined'));
+app.use(cors({ origin: allowedOrigin }));
 app.use(express.json());
+
+const limiter = rateLimit({ windowMs: 60 * 1000, max: 100 });
+app.use(limiter);
 
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
