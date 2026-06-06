@@ -8,12 +8,16 @@ const authRoutes = require('./routes/auth');
 const policiesRoutes = require('./routes/policies');
 const Policy = require('./models/policy');
 const User = require('./models/user');
+const helmet = require('helmet');        
+const morgan = require('morgan');        
+const rateLimit = require('express-rate-limit'); 
 
 dotenv.config();
 
+const allowedOrigin = process.env.ALLOWED_ORIGIN || 'http://localhost:4200'; 
 const app = express();
 const port = process.env.PORT || 4000;
-const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://localhost:27017/poc1';
+const mongoUri = process.env.MONGODB_URI ;
 
 app.use(helmet());
 app.use(morgan('combined'));
